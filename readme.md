@@ -1,4 +1,4 @@
-# amber-plumming-app-backend
+# banking-app-backend
 
 ## Getting Started
 
