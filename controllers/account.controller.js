@@ -75,4 +75,4 @@ class AccountController{
     } 
 }
 
-mongoose.exports = AccountController;
+module.exports = AccountController;
