@@ -1,16 +1,19 @@
-
-/**
- * @param { Response } res
- * @param { number } statusCode 
- * @param { string } message 
- * @param { string } status 
- * @param { {<T>} | Array<T>}  data 
- */
-exports.jsonResponse = (res, statusCode,status, message, data) =>{
-    res.status(statusCode).json({
-        status,
-        message,
-        data,
-
-    })
-}
+class JSONResponse {
+    static success(res, message = "success", data, status) {
+       res.status(status ?? res.statusCode).json({
+          status: status ?? res.statusCode,
+          message,
+          data,
+       });
+    }
+    
+    static error(res, message = "error", error, status) {
+       res.status(status ?? res.statusCode).json({
+          message,
+          error,
+          status: status ?? res.statusCode,
+       });
+    }
+ }
+ 
+ module.exports = { JSONResponse }; 
