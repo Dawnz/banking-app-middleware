@@ -2,7 +2,7 @@
 
 ### Cloning the Project
 
-To have a local copy of the project to work on clone the repository using the command `git clone https://github.com/Dawnz/amber-plumming-app.git` in the terminal.
+To have a local copy of the project to work on clone the repository using the command `git clone https://github.com/Dawnz/banking-app-middleware.git` in the terminal.
 
 This will create a folder  in the directory specified in the terminal. Use the command ` cd <folder name>` to change the directory into the project folder.
 
@@ -16,7 +16,7 @@ This will be hosted locally and can be found if you are on the campus wifi
 Current server endpoint is [here](http://10.44.16.148:8080/)
 
 ### Run the Application.
-you can download the server side application to have a copy of the server side code at `https://github.com/Dawnz/amber-plumming-app-backend`
+you can download the server side application to have a copy of the server side code at `https://github.com/Dawnz/banking-app-middleware`
 install the dependencies using `npm i`
 launch the middleware using `npm run start`
 you can then start this application using  `ng serve` to have the application running
