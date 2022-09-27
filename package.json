@@ -1,0 +1,29 @@
+{
+  "name": "banking-app-middleware",
+  "version": "1.0.0",
+  "description": "To have a local copy of the project to work on clone the repository using the command `git clone https://github.com/Dawnz/banking-app-middleware.git` in the terminal.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dawnz/banking-app-middleware.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dawnz/banking-app-middleware/issues"
+  },
+  "homepage": "https://github.com/Dawnz/banking-app-middleware#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
