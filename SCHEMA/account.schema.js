@@ -33,6 +33,10 @@ const accountSchema = new Schema({
         type: String,
         required:[true, "No last name was provided"]
     },
+    username: {
+        type: String, 
+        required: [true, "Username must be present in order to be valid"],
+    },
     phone_number:{
         type: String,
         required:[true, "No phone number was provided"]
