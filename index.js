@@ -4,6 +4,7 @@ const app = express();
 const cors = require('cors');
 const PORT = process.env.PORT || 8000;
 const APIVERSION1 = require("./API/api-v1");
+const mongoose = require("mongoose");
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
@@ -11,6 +12,10 @@ app.use(cors());
 
 
 app.use("api/v1", APIVERSION1),
+
+mongoose.connect(process.env.DB_URL,{},()=>{
+    console.log("database connection established");
+})
 
 app.listen(PORT, ()=>{
     console.log('listening on port ', PORT);
