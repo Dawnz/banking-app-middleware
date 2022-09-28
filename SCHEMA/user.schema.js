@@ -1,4 +1,6 @@
 const {model, Schema} = require("mongoose");
+const bcrypt = require("bcrypt");
+
 
 const userSchema = new Schema({
     username : {
@@ -24,5 +26,16 @@ const userSchema = new Schema({
    
 
 });
+
+
+// Middleware function to execute and hash password before saving user into the database.
+userSchema.pre("save", async function(){
+    this.password = await bcrypt.hash(this.password, 10);
+})
+
+// Instance method to check for a password to compare a password with the encrypted password on the instance document.
+userSchema.methods.isCorrectPassword = async function(password){
+    return await bcrypt.compare(password, this.password);
+}
 
 module.exports = model("User", userSchema);
