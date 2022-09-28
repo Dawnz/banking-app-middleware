@@ -16,7 +16,7 @@ class UserController {
         try{
             let data = req.body;
             if(Object.keys(data).length == 0) throw new Error("No data passed to create user profile");
-            let user = User.create(data);
+            let user = await User.create(data);
             JSONResponse.success(res, "User profile successfully created", user, 201);
         }catch(error){
             JSONResponse.error(res, "Error createing user profile", error, 400);
@@ -39,7 +39,7 @@ class UserController {
             if(Object.keys(data).length == 0) {
                 return JSONResponse.success(res, "No data passed, file not updated",{}, 200);
             }
-            let user = User.findByIdAndUpdate(id); 
+            let user = await User.findByIdAndUpdate(id,data, {new:true}); 
             if(!user) throw new Error("User not found with the ID")
             JSONResponse.success(res, "User updated successfully", user, 200);
         }catch(error){
