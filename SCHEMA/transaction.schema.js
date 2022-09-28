@@ -11,9 +11,13 @@ const transactionSchema = new Schema({
         type: Number, 
         required: [true, "Cannot make a transaction without an ammount"]
     },
-    name_on_transaction:{
+    fname:{
         type: String,
-        required:[true, "A name must be provided"]
+        required:[true, "A first name must be provided"]
+    },
+    lname:{
+        type: String,
+        required:[true, "A last name must be provided"]
     },
     transaction_status:{
         type: String,
