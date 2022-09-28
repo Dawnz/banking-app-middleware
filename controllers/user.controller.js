@@ -59,8 +59,10 @@ class UserController {
         try{
             let users = User.find();
             JSONResponse.success(res, "Retrieved all users", users, 200);
+
         }catch(error){
-            JSONResponse.error(res, "Unable to find users", error, 500);
+            console.log(error);
+            JSONResponse.error(res, "Unable to find users", error, 404);
         }
     }
 
@@ -79,7 +81,7 @@ class UserController {
             let user = User.findByIdAndDelete(id);
             JSONResponse.success(res, "Successfully deleted user", user, 203);
         }catch(error){
-            JSONResponse.error(res, "Unable to delete user",error, 500 );
+            JSONResponse.error(res, "Unable to delete user",error, 404 );
         }
     }
     
@@ -99,7 +101,7 @@ class UserController {
             JSONResponse.success(res, "Retrieved user info", user, 200);
 
         }catch(error){
-            JSONResponse.error(res, "Unable to find user", error, 500);
+            JSONResponse.error(res, "Unable to find user", error, 404);
         }
     }
 
