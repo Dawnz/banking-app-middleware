@@ -40,9 +40,10 @@ class UserController {
                 return JSONResponse.success(res, "No data passed, file not updated",{}, 200);
             }
             let user = User.findByIdAndUpdate(id); 
+            if(!user) throw new Error("User not found with the ID")
             JSONResponse.success(res, "User updated successfully", user, 200);
         }catch(error){
-            JSONResponse.error(res, "Unable to update user profile", error, 400);
+            JSONResponse.error(res, "Unable to update user profile", error, 404);
         }
     }
 
@@ -96,6 +97,7 @@ class UserController {
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("Id is not a valid user profile in database");
             let user = await User.findById(id);
+            if(!user) throw new Error("User not found with this id");
             JSONResponse.success(res, "Retrieved user info", user, 200);
 
         }catch(error){
