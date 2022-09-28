@@ -37,6 +37,7 @@ class AccountController{
                 return JSON.succes(res, "No data passed to update, file not updated",{}, 200);
             }
             let account = await Account.findByIdAndUpdate(id, data, {new:true});
+            if(!account) throw new Error("Account was not found with that ID");
             JSONResponse.success(res, "Account information succesfully updated", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to update account",error, 400);
@@ -48,6 +49,7 @@ class AccountController{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("ID does not match any accounts in database");
             let account = await Account.findByIdAndDelete(id);
+            if(!account) throw new Error("Account was not found with that ID");
             JSONResponse.success(res, "Account information succesfully deleted", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to delete account", error, 400);
@@ -59,6 +61,7 @@ class AccountController{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("ID does not match any accounts in database");
             let account = await Account.findById(id);
+            if(!account) throw new Error("Account was not found with that ID");
             JSONResponse.success(res, "Account information succesfully found", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to find account", error, 400);
