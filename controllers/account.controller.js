@@ -68,9 +68,9 @@ class AccountController{
         }
     }
 
-    static getAccountsByUser = async(req, res, queryParam)=>{
+    static getAccountsByUser = async(req, res, username)=>{
         try{
-            let accounts = await Account.find({username: queryParam});
+            let accounts = await Account.find({username: username});
             JSONResponse.success(res, "Accounts for user found", accounts, 200)
         }catch(error){
             JSONResponse.error(res, "Cannot find Accounts for user", error, 404);
