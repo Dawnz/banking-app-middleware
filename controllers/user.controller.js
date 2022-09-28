@@ -57,7 +57,7 @@ class UserController {
      */
     static getAllUsers = async (req, res, next)=>{
         try{
-            let users = User.find();
+            let users = await User.find();
             JSONResponse.success(res, "Retrieved all users", users, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to find users", error, 500);
@@ -76,7 +76,7 @@ class UserController {
         try{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("ID does not match any user profile in database");
-            let user = User.findByIdAndDelete(id);
+            let user = await User.findByIdAndDelete(id);
             JSONResponse.success(res, "Successfully deleted user", user, 203);
         }catch(error){
             JSONResponse.error(res, "Unable to delete user",error, 500 );
@@ -95,7 +95,7 @@ class UserController {
         try{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("Id is not a valid user profile in database");
-            let user = User.findById(id);
+            let user = await User.findById(id);
             JSONResponse.success(res, "Retrieved user info", user, 200);
 
         }catch(error){

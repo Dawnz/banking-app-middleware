@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors());
 
 
-app.use("api/v1", APIVERSION1),
+app.use("/api/v1", APIVERSION1),
 
 mongoose.connect(process.env.DB_URL,{},()=>{
     console.log("database connection established");
