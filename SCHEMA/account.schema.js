@@ -42,8 +42,8 @@ const accountSchema = new Schema({
         required:[true, "No phone number was provided"]
     },
     account_balance: {
-        type: Number, 
-        default: 0,
+        type: Schema.Types.ObjectId,
+        ref: "Balance",
         
     }
 
