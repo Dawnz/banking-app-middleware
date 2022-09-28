@@ -11,6 +11,10 @@ const transactionSchema = new Schema({
         type: Number, 
         required: [true, "Cannot make a transaction without an ammount"]
     },
+    account_number: {
+        type: Number,
+        required: [true, "Cannot make a transaction without account number"]
+    }, 
     fname:{
         type: String,
         required:[true, "A first name must be provided"]
