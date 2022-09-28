@@ -8,6 +8,10 @@ const accountSchema = new Schema({
         message: "{VALUE} is not a correct account type, it should be either 'SAVINGS' or 'CHECKING'"
         }   
     },
+    account_number: {
+        type: String, 
+
+    },
     account_currency: {
         type: String, 
         max: [3, "The currency name should be 3 characters long"],
@@ -47,6 +51,21 @@ const accountSchema = new Schema({
         
     }
 
-});
+},{timestamps:true});
+
+
+/**
+ * ### Description
+ * Method that is used to calculate the balance of the account based on the type of transaction then saves the account.
+ * @param {Transaction} data 
+ */
+accountSchema.methods.calculateBalance = async function(data){
+    if(data.transaction_type == "WITHDRAW"){
+        this.balance  -= data.transaction_ammount;
+    }else if(data.transaction_type == "DEPOSIT"){
+        this.balance  += data.transaction_ammount;
+    }
+    await this.save();
+}
 
 module.exports = model("Account", accountSchema);
