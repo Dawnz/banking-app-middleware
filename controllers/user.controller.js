@@ -78,6 +78,7 @@ class UserController {
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("ID does not match any user profile in database");
             let user = await User.findByIdAndDelete(id);
+            if(!user) throw new Error("User does not exist with this ID")
             JSONResponse.success(res, "Successfully deleted user", user, 203);
         }catch(error){
             JSONResponse.error(res, "Unable to delete user",error, 404 );
