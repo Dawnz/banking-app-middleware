@@ -16,7 +16,7 @@ class UserController {
         try{
             let data = req.body;
             if(Object.keys(data).length == 0) throw new Error("No data passed to create user profile");
-            let user = User.create(data);
+            let user = await User.create(data);
             JSONResponse.success(res, "User profile successfully created", user, 201);
         }catch(error){
             JSONResponse.error(res, "Error createing user profile", error, 400);
@@ -39,7 +39,7 @@ class UserController {
             if(Object.keys(data).length == 0) {
                 return JSONResponse.success(res, "No data passed, file not updated",{}, 200);
             }
-            let user = User.findByIdAndUpdate(id); 
+            let user = await User.findByIdAndUpdate(id); 
             JSONResponse.success(res, "User updated successfully", user, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to update user profile", error, 400);
@@ -57,7 +57,7 @@ class UserController {
      */
     static getAllUsers = async (req, res, next)=>{
         try{
-            let users = User.find();
+            let users = await User.find();
             JSONResponse.success(res, "Retrieved all users", users, 200);
 
         }catch(error){
@@ -78,7 +78,7 @@ class UserController {
         try{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("ID does not match any user profile in database");
-            let user = User.findByIdAndDelete(id);
+            let user = await User.findByIdAndDelete(id);
             JSONResponse.success(res, "Successfully deleted user", user, 203);
         }catch(error){
             JSONResponse.error(res, "Unable to delete user",error, 404 );
@@ -97,7 +97,7 @@ class UserController {
         try{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("Id is not a valid user profile in database");
-            let user = User.findById(id);
+            let user = await User.findById(id);
             JSONResponse.success(res, "Retrieved user info", user, 200);
 
         }catch(error){
