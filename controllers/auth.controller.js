@@ -7,7 +7,7 @@ class AuthController{
     static authenticate = async(req, res, next) =>{
         try{
             let {username, password} = req.body;
-            let user = await User.find({username: username})[0];
+            let user = await User.findOne({username: username})[0];
             if(!user) throw new Error("No user present which matches the username");
             if(!await user.isCorrectPassword(password)) throw new Error("Invalid password");
             user
