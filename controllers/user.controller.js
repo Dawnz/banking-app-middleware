@@ -14,7 +14,10 @@ class UserController {
    static getAllUsers = async (req, res, next) => {
       try {
          let users = await User.find();
-         users = users.map((user)=> user.password = undefined);
+         users = users.map((user)=> {
+            user.password = undefined
+            return user;
+         });
          JSONResponse.success(res,"Retrieved all users successfully",users,201);
       } catch (error) {
          JSONResponse.error(res, "Error Retrieving user profiles", error, 404);
@@ -33,7 +36,7 @@ class UserController {
         try{
             let data = req.body;
             if(Object.keys(data).length == 0) throw new Error("No data passed to create user profile");
-            let user = await User.create(data);
+            let user = await new User(data).save();
             user.password = undefined;
             JSONResponse.success(res, "User profile successfully created", user, 201);
         }catch(error){
