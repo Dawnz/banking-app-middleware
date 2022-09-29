@@ -5,7 +5,6 @@ router
     .get(UserController.getAllUsers)
     .post(UserController.createUserProfile)
     
-
 router
     .route("/:id")
     .get(UserController.getUserProfile)
