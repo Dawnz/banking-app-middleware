@@ -6,25 +6,17 @@ class UserController {
    /**
     *
     * ### Description
-    * Creates a user profile with the data that the user passes in the body.
+    * Gets all the user profiles in the database
     * @param {Request} req
     * @param {Response} res
     * @param {Next} next
     */
-   static createUserProfile = async (req, res, next) => {
+   static getAllUsers = async (req, res, next) => {
       try {
-         let data = req.body;
-         if (Object.keys(data).length == 0)
-            throw new Error("No data passed to create user profile");
-         let user = await User.create(data);
-         JSONResponse.success(
-            res,
-            "User profile successfully created",
-            user,
-            201
-         );
+         let users = await User.find();
+         JSONResponse.success(res,"Retrieved all users successfully",users,201);
       } catch (error) {
-         JSONResponse.error(res, "Error createing user profile", error, 400);
+         JSONResponse.error(res, "Error Retrieving user profiles", error, 400);
       }
    };
 
