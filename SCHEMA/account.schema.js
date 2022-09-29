@@ -41,6 +41,11 @@ const accountSchema = new Schema({
         type: String,
         required:[true, "No phone number was provided"]
     },
+    account_balance: {
+        type: Number, 
+        default: 0,
+        
+    }
 
 });
 
