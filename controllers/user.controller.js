@@ -14,9 +14,13 @@ class UserController {
    static getAllUsers = async (req, res, next) => {
       try {
          let users = await User.find();
+         users = users.map((user)=> {
+            user.password = undefined
+            return user;
+         });
          JSONResponse.success(res,"Retrieved all users successfully",users,201);
       } catch (error) {
-         JSONResponse.error(res, "Error Retrieving user profiles", error, 400);
+         JSONResponse.error(res, "Error Retrieving user profiles", error, 404);
       }
    };
 
@@ -32,7 +36,8 @@ class UserController {
         try{
             let data = req.body;
             if(Object.keys(data).length == 0) throw new Error("No data passed to create user profile");
-            let user = await User.create(data);
+            let user = await new User(data).save();
+            user.password = undefined;
             JSONResponse.success(res, "User profile successfully created", user, 201);
         }catch(error){
             JSONResponse.error(res, "Error creating user profile", error, 400);
@@ -55,8 +60,9 @@ class UserController {
             if(Object.keys(data).length == 0) {
                 return JSONResponse.success(res, "No data passed, file not updated",{}, 200);
             }
-            let user = await User.findByIdAndUpdate(id,data, {new:true}); 
+            let user = await User.findByIdAndUpdate(id,data, {new:true});
             if(!user) throw new Error("User not found with the ID")
+            user.password == undefined; 
             JSONResponse.success(res, "User updated successfully", user, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to update user profile", error, 404);
@@ -78,6 +84,7 @@ class UserController {
             throw new Error("ID does not match any user profile in database");
          let user = await User.findByIdAndDelete(id);
          if (!user) throw new Error("User does not exist with this ID");
+         password = undefined;
          JSONResponse.success(res, "Successfully deleted user", user, 203);
       } catch (error) {
          JSONResponse.error(res, "Unable to delete user", error, 404);
@@ -99,6 +106,7 @@ class UserController {
             throw new Error("Id is not a valid user profile in database");
          let user = await User.findById(id);
          if (!user) throw new Error("User not found with this id");
+         user.password = undefined;
          JSONResponse.success(res, "Retrieved user info", user, 200);
       } catch (error) {
          JSONResponse.error(res, "Unable to find user", error, 404);
