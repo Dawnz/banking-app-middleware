@@ -61,7 +61,6 @@ class UserController {
             JSONResponse.success(res, "Retrieved all users", users, 200);
 
         }catch(error){
-            console.log(error);
             JSONResponse.error(res, "Unable to find users", error, 404);
         }
     }
