@@ -17,7 +17,7 @@ class AuthController{
 
             JSONResponse.success(res,"User is authenticated successfully", {user, token}, 200);
         }catch(error){
-            JSONResponse.error(res,"User not Authenticated", error, 404);
+            JSONResponse.error(res,"User not Authenticated", error, 403);
         }
     }
 }
