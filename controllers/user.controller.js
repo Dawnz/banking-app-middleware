@@ -35,7 +35,7 @@ class UserController {
             let user = await User.create(data);
             JSONResponse.success(res, "User profile successfully created", user, 201);
         }catch(error){
-            JSONResponse.error(res, "Error createing user profile", error, 400);
+            JSONResponse.error(res, "Error creating user profile", error, 400);
         }
     }
 
