@@ -57,7 +57,7 @@ const accountSchema = new Schema({
         
     }
 
-});
+}, {timestamps:true});
 const Account = model("Account", accountSchema);
 module.exports = Account;
 
