@@ -7,7 +7,7 @@ class AccountController{
         try{
             let data = req.body;
             if(Object.keys(data).length == 0)throw new Error("No data was passed to create account");
-            const account = await new Account.create(data);
+            const account = await new Account(data);
             JSONResponse.success(res,"Account was successfully created", account, 201);
         }catch(error){
             JSONResponse.error(res,"Error creating account", error, 400);
