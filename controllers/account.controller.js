@@ -17,6 +17,7 @@ class AccountController{
             account.account_balance = accountBal;
             account.account_number = await this.generateAccountNumber(accountBal, 8);
             let savedAccount = await account.save();
+            account;
             JSONResponse.success(res,"Account was successfully created", savedAccount, 201);
         }catch(error){
             // probably need to wrap this in another try block
@@ -78,7 +79,7 @@ class AccountController{
             }else if(account_number){
                 return this.getAccountByAccountNumber(req, res, account_number);
             }
-            let accounts = await Account.find();
+            let accounts = await Account.find({});
             JSONResponse.success(res,"Successfully Retrieved all accounts", accounts, 200);
 
         }catch(error){
@@ -86,11 +87,11 @@ class AccountController{
         }
     }
 
-    static populateAutoProperties = async (data)=>{
-        let wBalance = await this.generateBalance(data);
-        wBalance.account_number = await this.generateAccountNumber(wBalance.account_balance, 8);
-        return wBalance;
-    }
+    // static populateAutoProperties = async (data)=>{
+    //     let wBalance = await this.generateBalance(data);
+    //     wBalance.account_number = await this.generateAccountNumber(wBalance.account_balance, 8);
+    //     return wBalance;
+    // }
     static updateAccount = async(req, res, next)=>{
         try{
             let data = req.body;
@@ -100,8 +101,12 @@ class AccountController{
             if(Object.keys(data).length == 0){
                 return JSON.succes(res, "No data passed to update, file not updated",{}, 200);
             }
+            if(data.account_balance){
+                data.account_balance = undefined;
+            }
             let account = await Account.findByIdAndUpdate(id, data, {new:true});
             if(!account) throw new Error("Account was not found with that ID");
+            account.account_bala;nce = undefined;
             JSONResponse.success(res, "Account information succesfully updated", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to update account",error, 404);
@@ -116,6 +121,7 @@ class AccountController{
             if(!account) throw new Error("Account was not found with that ID");
             await this.cleanUpBalance(account.account_balance);
             account.delete();
+            account.account_balance = undefined;
             JSONResponse.success(res, "Account information succesfully deleted", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to delete account", error, 400);
@@ -136,7 +142,7 @@ class AccountController{
 
     static getAccountsByUser = async(req, res, username)=>{
         try{
-            let accounts = await Account.find({username: username}).populate("account_balance");
+            let accounts = await Account.find({username: username});
             JSONResponse.success(res, "Accounts for user found", accounts, 200)
         }catch(error){
             JSONResponse.error(res, "Cannot find Accounts for user", error, 404);
