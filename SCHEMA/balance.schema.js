@@ -20,7 +20,7 @@ balanceSchema.methods.calculateBalance = async function(data){
         return await this.save();
     }catch(err){
         console.log("There was an error");
-        throw new Error(err.message);
+        return Promise.reject(new Error(err.message));
     }
 
 
