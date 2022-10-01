@@ -16,7 +16,7 @@ const options = {
             }
         ]
     },
-    apis: ["./routes/user", "./routes/auth"]
+    apis: ["./routes/user", "./routes/auth.routes.js"]
 }
 
 // Docs in JSON format
