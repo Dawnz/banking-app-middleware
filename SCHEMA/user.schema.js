@@ -17,7 +17,11 @@ const userSchema = new Schema({
     }, 
     id_type: {
         type: String,
-        required: [true, "Type of ID must be present in order to be valid"]
+        required: [true, "Type of ID must be present in order to be valid"],
+        enum: {
+            values: ["NATIONAL", "PASSPORT", "LICENSE"],
+            message: "{VALUE} is not valid, it should be either 'NATIONAL', 'PASSPORT', 'LICENSE'"
+        },
     },
     id_number: {
         type: String,
@@ -30,6 +34,7 @@ const userSchema = new Schema({
 
 // Middleware function to execute and hash password before saving user into the database.
 userSchema.pre("save", async function(){
+    this.id_type = this.id_type.toUpperCase();
     this.password = await bcrypt.hash(this.password, 10);
 })
 

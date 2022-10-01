@@ -35,6 +35,7 @@ class UserController {
     static createUserProfile = async(req, res, next)=>{
         try{
             let data = req.body;
+            data.id_type = data.id_type.toUpperCase();
             if(Object.keys(data).length == 0) throw new Error("No data passed to create user profile");
             let user = await new User(data).save();
             user.password = undefined;
@@ -56,6 +57,7 @@ class UserController {
         try{
             let data = req.body;
             let id = req.params.id;
+            data.id_type = data.id_type.toUpperCase();
             if(!ObjectId.isValid(id)) throw new Error("Invalid ID was passed as a parameter");
             if(Object.keys(data).length == 0) {
                 return JSONResponse.success(res, "No data passed, file not updated",{}, 200);
@@ -84,7 +86,6 @@ class UserController {
             throw new Error("ID does not match any user profile in database");
          let user = await User.findByIdAndDelete(id);
          if (!user) throw new Error("User does not exist with this ID");
-         password = undefined;
          JSONResponse.success(res, "Successfully deleted user", user, 203);
       } catch (error) {
          JSONResponse.error(res, "Unable to delete user", error, 404);
