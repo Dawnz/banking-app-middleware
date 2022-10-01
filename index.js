@@ -5,6 +5,7 @@ const cors = require("cors");
 const PORT = process.env.PORT || 8000;
 const APIVERSION1 = require("./api/api-v1");
 const mongoose = require("mongoose");
+const { swaggerDocs: V1SwaggerDocs} = require( "./swagger")
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -17,4 +18,5 @@ app.use("/api/v1", APIVERSION1),
 
 app.listen(PORT, () => {
    console.log("listening on port ", PORT);
+   V1SwaggerDocs( app, PORT)
 });

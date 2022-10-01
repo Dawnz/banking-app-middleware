@@ -1,3 +1,5 @@
+# banking-app-backend
+
 ## Getting Started
 
 ### Cloning the Project
@@ -12,30 +14,25 @@ node_modules which contains all the modules for this project is selected to be i
 
 ### Starting the Server.
 
-This will be hosted locally and can be found if you are on the campus wifi
-Current server endpoint is [here](http://10.44.16.148:8080/)
+-TBA
 
 ### Run the Application.
-you can download the server side application to have a copy of the server side code at `https://github.com/Dawnz/banking-app-middleware`
-install the dependencies using `npm i`
-launch the middleware using `npm run start`
-you can then start this application using  `ng serve` to have the application running
 
+-TBA
 ## Folder Structure
 
-### Components
-in the application, all components created should be in the components folder(src/components).
+### Routes
+in the application, all routes created should be in the routes folder.
 
-### Services
-in the application, all services should be listed under the services folder(src/services).
+### Database Configuration
+in the application, all database setup should be under the lib folder.
 
-### Pages
-in the application, all pages should be listed under the pages folder(src/pages). 
+### server
+in the application the server.js should be at the root of the application. 
 
 #### Tips
-- a Page is a component the app can be routed towards
-- a Component are what builds up the contents of a Page
-- both a Page and a component can utilize a service
+- the configuration information should pull from the .env file declarations
+- any additional files that are required should be listed in an appropriately named folder
 
 
 ## Making Changes.
@@ -82,3 +79,4 @@ Throughout the lifecycle of this application you may be assigned issues to have 
 
 ## Requesting a Review
 It is good practice to request a review whenever you make a pull request. To do this, In the list of pull requests, click the pull request that you'd like to ask a specific person or a team to review. Navigate to Reviewers in the right sidebar. To request a review from a suggested person under Reviewers, next to their username, click Request.
+
