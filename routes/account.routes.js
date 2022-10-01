@@ -1,16 +1,17 @@
 const router = require('express').Router()
 const AccountController = require('../controllers/account.controller');
+const Middleware = require('../middlewares/middleware');
 
 router
     .route("/")
     .post(AccountController.createAccount)
-    .get(AccountController.getAccountById)
+    .get(Middleware.isAuthenticated, AccountController.getAccountById)
 
 router
     .route("/:id")
-    .get(AccountController.getAccountById)
-    .patch(AccountController.updateAccount)
-    .delete(AccountController.deleteAccount)
+    .get(Middleware.isAuthenticated, AccountController.getAccountById)
+    .patch(Middleware.isAuthenticated, AccountController.updateAccount)
+    .delete(Middleware.isAuthenticated, AccountController.deleteAccount)
     
 
 

@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const UserController = require('../controllers/user.controller');
+const Middleware = require('../middlewares/middleware');
 
 router
     .route("/")
@@ -22,7 +23,7 @@ router
      *                                  type: string
      *                                  example: Retrieved all users successfully
      */
-    .get(UserController.getAllUsers)
+    .get(Middleware.isAuthenticated,UserController.getAllUsers)
 
     /**
      * @openapi
