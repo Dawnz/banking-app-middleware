@@ -19,6 +19,7 @@ class Middleware{
                 const bearerToken = bearer[1];
                 req.token = bearerToken;
                 let decodedToken = JWT.verify(bearerToken, process.env.JWT_SECRET_KEY);
+                req.user = decodedToken;
                 next();
             } else {
                 // Forbidden
