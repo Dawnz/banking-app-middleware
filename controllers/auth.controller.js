@@ -13,8 +13,9 @@ class AuthController {
          if (!passCheck) throw new Error("Invalid password");
          let data = user;
          data.password = undefined;
+         data.isSuperAdmin = undefined;
          let token = generateJWTToken(
-            { id: user._id, username: user.username, first_name: user.first_name, last_name: user.last_name},
+            { id: user._id, username: user.username, isSuperAdmin: user.isSuperAdmin},
             "3600"
          );
 
