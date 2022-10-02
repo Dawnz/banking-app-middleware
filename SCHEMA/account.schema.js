@@ -5,9 +5,11 @@ const accountSchema = new Schema({
     account_type : {
         type: String, 
         enum: {
-        values: ["SAVINGS", "CHECKING"],
+        values: ["SAVING", "CHECKING"],
         message: "{VALUE} is not a correct account type, it should be either 'SAVINGS' or 'CHECKING'"
-        }   
+        },
+        required:[true, "Please Enter an account type"],
+        uppercase: true  
     },
     account_number: {
         type: String,
@@ -29,7 +31,8 @@ const accountSchema = new Schema({
     },
     id_number: {
         type: String,
-        required: [true, "ID must be present in order to be valid"]
+        required: [true, "ID must be present in order to be valid"],
+        required: true
     },
     address: {
         type:String,
@@ -58,8 +61,18 @@ const accountSchema = new Schema({
     }
 
 }, {timestamps:true});
+
+// accountSchema.pre("save",function(next){
+    //     console.log("file is almost saved");
+    //     next()
+    // });
+
+// Populated and used projection to only return the account_balance as well as the _id;
+accountSchema.post("findOne", async function(doc){
+    if(doc){
+        await doc.populate("account_balance",{"account_balance": 1});
+    }
+});
+    
 const Account = model("Account", accountSchema);
-
-
-
 module.exports = Account;

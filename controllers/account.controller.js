@@ -10,7 +10,8 @@ class AccountController{
         let accountBal = "";
         try{
             let data = req.body;
-            data.id_type = data.id_type.toUpperCase();
+            data.id_type = (data.id_type) ? data.id_type.toUpperCase() : undefined;
+            if(!data.id_type) throw new Error("No ID type was given"); 
             if(Object.keys(data).length == 0)throw new Error("No data was passed to create account");
             let account = new Account(data);
             accountBal = await this.generateBalanceId(data);
@@ -18,6 +19,7 @@ class AccountController{
             account.account_number = await this.generateAccountNumber(accountBal, 8);
             let savedAccount = await account.save();
             account;
+            savedAccount.populate("account_balance");
             JSONResponse.success(res,"Account was successfully created", savedAccount, 201);
         }catch(error){
             // probably need to wrap this in another try block
@@ -73,7 +75,6 @@ class AccountController{
     static getAllAccounts = async(req, res, next)=>{
         try{
             let {username, account_number} = req.query;
-            console.log(req.query)
             if(username){
                 return this.getAccountsByUser(req, res, username);
             }else if(account_number){
@@ -96,17 +97,17 @@ class AccountController{
         try{
             let data = req.body;
             let id = req.params.id;
-            data.id_type = data.id_type.toUpperCase();
-            if(!ObjectId.isValid(id)) throw new Error ("ID does not match any accounts in database")
+            data.account_number = undefined;
+            data.id_type = (data.id_type) ? data.id_type.toUpperCase() : undefined;
+            if(!ObjectId.isValid(id)) throw new Error ("ID does not match any accounts in database");
             if(Object.keys(data).length == 0){
                 return JSON.succes(res, "No data passed to update, file not updated",{}, 200);
             }
             if(data.account_balance){
                 data.account_balance = undefined;
             }
-            let account = await Account.findByIdAndUpdate(id, data, {new:true});
+            let account = await Account.findByIdAndUpdate(id, data, {new:true}).populate("account_balance", {"account_balance": 1});
             if(!account) throw new Error("Account was not found with that ID");
-            account.account_bala;nce = undefined;
             JSONResponse.success(res, "Account information succesfully updated", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to update account",error, 404);
@@ -121,7 +122,6 @@ class AccountController{
             if(!account) throw new Error("Account was not found with that ID");
             await this.cleanUpBalance(account.account_balance);
             account.delete();
-            account.account_balance = undefined;
             JSONResponse.success(res, "Account information succesfully deleted", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to delete account", error, 400);
@@ -132,8 +132,9 @@ class AccountController{
         try{
             let id = req.params.id;
             if(!ObjectId.isValid(id)) throw new Error("ID does not match any accounts in database");
-            let account = await Account.findById(id);
+            let account = await Account.findOne({_id:id});
             if(!account) throw new Error("Account was not found with that ID");
+            console.log(account)
             JSONResponse.success(res, "Account information succesfully found", account, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to find account", error, 400);
