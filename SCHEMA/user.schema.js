@@ -1,4 +1,5 @@
 const {model, Schema} = require("mongoose");
+const Account = require("../schema/account.schema");
 const bcrypt = require("bcrypt");
 
 
@@ -37,9 +38,13 @@ const userSchema = new Schema({
 
 
 // Middleware function to execute and hash password before saving user into the database.
+
 userSchema.pre("save", async function(){
     try{
-        this.id_type = (this.id_type) ?this.id_type.toUpperCase():  undefined;
+        // created a check to make sure account exist for user before user is created.
+        let account = await Account.exists({username:this.username});
+        if(!account) return Promise.reject(new Error("No Account Found for this user"))
+        this.id_type = (this.id_type) ? this.id_type.toUpperCase():  undefined;
         this.password = await bcrypt.hash(this.password, 10);
         this.isSuperAdmin = false;
     }catch(error){
