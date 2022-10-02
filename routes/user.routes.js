@@ -3,7 +3,7 @@ const UserController = require('../controllers/user.controller');
 const Middleware = require('../middlewares/middleware');
 router
     .route("/")
-    .get(Middleware.isAuthenticated,UserController.getAllUsers)
+    .get(Middleware.isAuthenticated,Middleware.isSuperAdmin,UserController.getAllUsers)
     .post(UserController.createUserProfile)
     
 router

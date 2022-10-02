@@ -28,6 +28,13 @@ class Middleware{
             JSONResponse.error(res, "Unauthorized Access Attempted",error, 403); 
         }
     }
+    static isSuperAdmin = (req, res, next)=>{
+        if(req.user.isSuperAdmin){
+            next()
+        }else{
+            JSONResponse.error(res, "Unauthorized Access Attempted", "You do not have the permission to access this data", 403);
+        }
+    }
     
 }
 
