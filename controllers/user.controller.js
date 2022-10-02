@@ -14,10 +14,6 @@ class UserController {
    static getAllUsers = async (req, res, next) => {
       try {
          let users = await User.find();
-         users = users.map((user)=> {
-            user.password = undefined
-            return user;
-         });
          JSONResponse.success(res,"Retrieved all users successfully",users,201);
       } catch (error) {
          JSONResponse.error(res, "Error Retrieving user profiles", error, 404);
@@ -57,14 +53,12 @@ class UserController {
         try{
             let data = req.body;
             let id = req.params.id;
-            data.id_type = data.id_type.toUpperCase();
             if(!ObjectId.isValid(id)) throw new Error("Invalid ID was passed as a parameter");
             if(Object.keys(data).length == 0) {
                 return JSONResponse.success(res, "No data passed, file not updated",{}, 200);
             }
-            let user = await User.findByIdAndUpdate(id,data, {new:true});
-            if(!user) throw new Error("User not found with the ID")
-            user.password == undefined; 
+            let user = await User.findOneAndUpdate({_id:id},data, {new:true});
+            if(!user) throw new Error("User not found with the ID");
             JSONResponse.success(res, "User updated successfully", user, 200);
         }catch(error){
             JSONResponse.error(res, "Unable to update user profile", error, 404);
