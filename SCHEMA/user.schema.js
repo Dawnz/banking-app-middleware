@@ -42,10 +42,11 @@ const userSchema = new Schema({
 userSchema.pre("save", async function(){
     try{
         // created a check to make sure account exist for user before user is created.
-        let account = await Account.exists({username:this.username});
+        let account = await Account.find({username:this.username});
         if(!account) return Promise.reject(new Error("No Account Found for this user"))
         this.id_type = (this.id_type) ? this.id_type.toUpperCase():  undefined;
         this.password = await bcrypt.hash(this.password, 10);
+        console.log(this.password)
         this.isSuperAdmin = false;
     }catch(error){
         return Promise.reject(new Error(error.message));
@@ -64,15 +65,13 @@ userSchema.post("save", async function(doc){
 
 userSchema.post("findOneAndUpdate", async function(doc,next){    
     try{
-    doc.id_type = (doc.id_type) ?doc.id_type.toUpperCase():  undefined;
-    doc.password = await bcrypt.hash(doc.password, 10);
-    doc = await doc.save();
-    doc = removeSensitiveFields(doc)
 
+    doc.id_type = (doc.id_type) ?doc.id_type.toUpperCase():  undefined;
+    doc = await doc.save();
+    next()
     }catch(error){
         return Promise.reject(new Error(error.message));
     }
-    next()
 })
 
 
@@ -87,6 +86,7 @@ userSchema.post(/^find/, async function(doc){
         if(!doc) return Promise.reject(new Error("No File found"));
         if(!(this.op == "findOne" && this._conditions.username)) {
             doc = removeSensitiveFields(doc);
+
         }
     }
 });
@@ -99,7 +99,8 @@ function removeSensitiveFields(doc){
 }
 // Instance method to check for a password to compare a password with the encrypted password on the instance document.
 userSchema.methods.isCorrectPassword = async function(password){
-    return await bcrypt.compare(password, this.password);
+    let isCorrect = await bcrypt.compare(password, this.password);
+    return isCorrect;
 }
 
 module.exports = model("User", userSchema);
