@@ -2,7 +2,34 @@ const {model, Schema} = require("mongoose");
 const Account = require("../schema/account.schema");
 const bcrypt = require("bcrypt");
 
-
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *      User:
+ *          type: object
+ *          properties:
+ *              id:
+ *                  type: mongoose object id as string
+ *                  example: 63228ae60e8b432603389f39
+ *              username:
+ *                  type: string
+ *                  example: jdoe65
+ *              email:
+ *                  type: string
+ *                  example: jdoe65@mail.com
+ *              password:
+ *                  type: string
+ *                  example: $3cUrePa$$0rd
+ *              id_type:
+ *                  type: string
+ *                  example: Passport
+ *              id_number:
+ *                  type: string
+ *                  example: A1234567
+ *      
+ * 
+ */
 const userSchema = new Schema({
     username : {
         type: String, 
