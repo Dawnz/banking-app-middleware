@@ -1,5 +1,48 @@
 const {model, Schema} = require("mongoose");
 
+
+/**
+ * @openapi
+ * components:
+ *  schemas:
+ *      Account:
+ *          type: object
+ *          properties:
+ *              id:
+ *                  type: mongoose object id as string
+ *                  example: 63228ae60e8b432603389f39
+ *              account_type: 
+ *                  type: string
+ *                  example: SAVINGS
+ *              account_currency:
+ *                  type: string
+ *                  example: USD
+ *              id_type:
+ *                  type: string
+ *                  example: Passport
+ *              id_number:
+ *                  type: string
+ *                  example: A1234567
+ *              address:
+ *                  type: string
+ *                  example: Suite B11, Pinnacle Pointe, 53 Lady Musgrave Rd, Kingston
+ *              first_name:
+ *                  type: string
+ *                  example: John
+ *              last_name: 
+ *                  type: string
+ *                  example: Doe
+ *              username:
+ *                  type: string
+ *                  example: jdoe95
+ *              phone_number:
+ *                  type: string
+ *                  example: 876 354 7211
+ *              account_balance:
+ *                  type: number
+ *                  example: 35,000
+ *      
+ */
 const accountSchema = new Schema({
     account_type : {
         type: String, 
