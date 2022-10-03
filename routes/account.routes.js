@@ -146,8 +146,34 @@ router
      *          - Accounts
      *      summary: Retrieve an account 
      *      parameters: 
-     *          - in: path
-     *            name: id
+     *          -   in: path
+     *              name: id
+     *              schema:
+     *                  type: string
+     *                  example: 63228ae60e8b432603389f39
+     *              required: true
+     *              description: Mongoose object id of the account to be retrieved
+     *      responses:
+     *          200:
+     *              description: SUCCESS
+     *              content: 
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: 200
+     *                              message: 
+     *                                  type: string
+     *                                  example: Account information succesfully found
+     *                              data:
+     *                                  type: object
+     *                                  properties:
+     *                                      account:
+     *                                          type: object
+     *                                          $ref: "#/components/schemas/Account"
+     *                                          
      *            
      */
     .get(Middleware.isAuthenticated, AccountController.getAccountById)
