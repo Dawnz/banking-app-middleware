@@ -70,7 +70,7 @@ const accountSchema = new Schema({
 // Populated and used projection to only return the account_balance as well as the _id;
 accountSchema.post("findOne", async function(doc){
     if(doc){
-        await doc.populate("account_balance",{"account_balance": 1});
+        await doc.populate("account_balance",{"account_balance": 1, "_id": 0});
     }
 });
     
