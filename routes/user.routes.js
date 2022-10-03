@@ -4,6 +4,7 @@ const Middleware = require('../middlewares/middleware');
 
 router
     .route("/")
+    .get(Middleware.isAuthenticated,Middleware.isSuperAdmin,UserController.getAllUsers)
 
     /**
      * @openapi

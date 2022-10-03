@@ -5,7 +5,7 @@ const Middleware = require('../middlewares/middleware');
 router
     .route("/")
     .post(AccountController.createAccount)
-    .get(Middleware.isAuthenticated, AccountController.getAccountById)
+    .get(Middleware.isAuthenticated, AccountController.getAllAccounts)
 
 router
     .route("/:id")
