@@ -37,7 +37,7 @@ class Middleware{
     }
 
     static isUserOrSuperAdmin = (req, res, next)=>{
-        if(req.params.id != req.user._id){
+        if(req.params.id != req.user.id){
             return this.isSuperAdmin(req, res,next);
         }else{
             next();
