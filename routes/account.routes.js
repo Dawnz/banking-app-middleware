@@ -173,11 +173,187 @@ router
      *                                      account:
      *                                          type: object
      *                                          $ref: "#/components/schemas/Account"
-     *                                          
-     *            
+     *          400:
+     *              description: FAILED
+     *              content: 
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: 400
+     *                              message: 
+     *                                  type: string
+     *                                  example: Bad Request
+     *                              error:
+     *                                  type: string
+     *                                  example: Unable to find account
+     *          5XX:
+     *              description: FAILED
+     *              content:
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: FAILED
+     *                              data:
+     *                                  type: object
+     *                                  properties:
+     *                                          error:
+     *                                              type: string
+     *                                              example: Server error
+     *                  
      */
     .get(Middleware.isAuthenticated, AccountController.getAccountById)
+    /**
+     * @openapi
+     * /api/v1/accounts/{id}:
+     *  patch:
+     *      tags:
+     *          - Accounts
+     *      summary: Update an account 
+     *      parameters: 
+     *          -   in: path
+     *              name: id
+     *              schema:
+     *                  type: string
+     *                  example: 63228ae60e8b432603389f39
+     *              required: true
+     *              description: Mongoose object id of the account to be updated
+     *      requestBody:
+     *          description: Form data required to create a new account
+     *          required: true
+     *          content:
+     *              application/json:
+     *                  schema:
+     *                      $ref: '#/components/schemas/Account'
+     *      responses:
+     *          200:
+     *              description: SUCCESS
+     *              content:
+     *                  application/json:
+     *                      schema: 
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: 200
+     *                              message: 
+     *                                  type: string
+     *                                  example: Account information succesfully updated
+     *                              data: 
+     *                                  type: object
+     *                                  properties:
+     *                                      account:
+     *                                          type: object
+     *                                          $ref: "#/components/schemas/Account"
+     *          400:
+     *              description: FAILED
+     *              content:
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: 400
+     *                              message:
+     *                                  type: string
+     *                                  example: Bad request
+     *                              error:
+     *                                  type: string
+     *                                  example: Unable to update account
+     *          5XX:
+     *              description: FAILED
+     *              content:
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: FAILED
+     *                              data:
+     *                                  type: object
+     *                                  properties:
+     *                                          error:
+     *                                              type: string
+     *                                              example: Server error
+     */
     .patch(Middleware.isAuthenticated, AccountController.updateAccount)
+    /**
+     * @openapi
+     * /api/v1/accounts/{id}:
+     *  delete:
+     *      summary: Delete an account
+     *      tags:
+     *          - Accounts
+     *      parameters: 
+     *          - in: path
+     *            name: id
+     *            schema:
+     *              type: string
+     *              example: 63228ae60e8b432603389f39
+     *            required: true
+     *            description: mongoose object id of the account to be deleted
+     *      responses:
+     *          200:
+     *              description: SUCCESS
+     *              content:
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: 200
+     *                              message:
+     *                                  type: string
+     *                                  example: Account information succesfully found
+     *                              data:
+     *                                  type: object
+     *                                  properties:
+     *                                      account:
+     *                                          type: object
+     *                                          $ref: "#/components/schemas/Account"
+     *          400:
+     *              description: FAILED
+     *              content: 
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: 400
+     *                              message:
+     *                                  type: string
+     *                                  example: Bad Request
+     *                              error:
+     *                                  type: string
+     *                                  example: Unable to delete account
+     *          5XX:
+     *              description: FAILED
+     *              content:
+     *                  application/json:
+     *                      schema:
+     *                          type: object
+     *                          properties:
+     *                              status:
+     *                                  type: string
+     *                                  example: FAILED
+     *                              data:
+     *                                  type: object
+     *                                  properties:
+     *                                          error:
+     *                                              type: string
+     *                                              example: Server error
+     *            
+     *              
+     */
     .delete(Middleware.isAuthenticated, AccountController.deleteAccount)
     
 
