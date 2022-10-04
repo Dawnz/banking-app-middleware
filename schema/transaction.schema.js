@@ -2,7 +2,9 @@ const {model, Schema} = require("mongoose");
 
 const transactionSchema = new Schema({
     transaction_type:{
-        type: String, 
+        type: String,
+        required:[true, "There needs to be a transaction type"],
+        uppercase:true,
         enum: {
         values: ["WITHDRAW", "DEPOSIT"],
         message: "{VALUE} is not a correct transaction type, it should be either 'WITHDRAW' or 'DEPOSIT'"
@@ -11,9 +13,17 @@ const transactionSchema = new Schema({
         type: Number, 
         required: [true, "Cannot make a transaction without an ammount"]
     },
-    name_on_transaction:{
+    account_number: {
         type: String,
-        required:[true, "A name must be provided"]
+        required: [true, "Cannot make a transaction without account number"]
+    }, 
+    fname:{
+        type: String,
+        required:[true, "A first name must be provided"]
+    },
+    lname:{
+        type: String,
+        required:[true, "A last name must be provided"]
     },
     transaction_status:{
         type: String,

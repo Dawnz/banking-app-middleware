@@ -19,12 +19,20 @@ class Middleware{
                 const bearerToken = bearer[1];
                 req.token = bearerToken;
                 let decodedToken = JWT.verify(bearerToken, process.env.JWT_SECRET_KEY);
+                req.user = decodedToken;
                 next();
             } else {
                 // Forbidden
                 JSONResponse.error(res, "Unauthorized Access Attempted",error, 403);        }
         }catch(error){
             JSONResponse.error(res, "Unauthorized Access Attempted",error, 403); 
+        }
+    }
+    static isSuperAdmin = (req, res, next)=>{
+        if(req.user.isSuperAdmin){
+            next()
+        }else{
+            JSONResponse.error(res, "Unauthorized Access Attempted", "You do not have the permission to access this data", 403);
         }
     }
     
