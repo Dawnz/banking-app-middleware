@@ -23,7 +23,7 @@ class Middleware{
                 next();
             } else {
                 // Forbidden
-                JSONResponse.error(res, "Unauthorized Access Attempted",error, 403);        }
+                JSONResponse.error(res, "Unauthorized Access Attempted","Access Denied", 403);        }
         }catch(error){
             JSONResponse.error(res, "Unauthorized Access Attempted",error, 403); 
         }
@@ -35,6 +35,15 @@ class Middleware{
             JSONResponse.error(res, "Unauthorized Access Attempted", "You do not have the permission to access this data", 403);
         }
     }
+
+    static isUserOrSuperAdmin = (req, res, next)=>{
+        if(req.params.id != req.user._id){
+            return this.isSuperAdmin(req, res,next);
+        }else{
+            next();
+        }
+    }
+
     
 }
 
