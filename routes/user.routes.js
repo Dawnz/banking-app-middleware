@@ -4,9 +4,7 @@ const Middleware = require('../middlewares/middleware');
 
 router
     .route("/")
-    .get(Middleware.isAuthenticated,Middleware.isSuperAdmin,UserController.getAllUsers)
-
-    /**
+        /**
      * @openapi
      * /api/v1/users:
      *  get:
@@ -24,7 +22,7 @@ router
      *                                  type: string
      *                                  example: Retrieved all users successfully
      */
-    .get(Middleware.isAuthenticated,UserController.getAllUsers)
+    .get(Middleware.isAuthenticated,Middleware.isSuperAdmin,UserController.getAllUsers)
 
     /**
      * @openapi
